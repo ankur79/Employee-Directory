@@ -1,0 +1,45 @@
+
+.App-header {
+  background-color: #222;
+  height: 30px;
+  padding: 5px;
+  color: white;
+}
+
+.App-title{
+  font-size: 16px;
+  padding: 5px;
+  font-weight: bold;
+}
+
+.empRow{
+  display: flex;
+  justify-content: space-between;
+  padding: 5px;
+  background: #f3f3f3;
+  margin: 3px;
+  border-bottom: 1px solid #333;
+}
+
+.empRow > div{
+  align-content: left;
+  width: 100%;
+}
+
+.empProfile > div{
+  display: flex;
+  flex-direction: column;
+  margin: 5px;
+  padding: 5px;
+}
+
+.empProfile > div > label{
+  font-size: 12px;
+  font-weight: bold;
+  padding-bottom: 5px; 
+}
+
+.empProfile > div > input{
+  font-size: 14px;
+  padding: 5px 2px; 
+}
