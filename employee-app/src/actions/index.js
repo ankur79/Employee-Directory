@@ -12,10 +12,10 @@ export const updateUser = user => {
   }
 }  
 
-export const editUser = user => {
+export const editUser = id => {
   return {
     type: 'EDIT_USER',
-    user
+    id
   }
 }  
 

@@ -1,25 +1,31 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { addUser, updateUser } from './actions'
+import { updateUser, editUser } from './actions'
+import { push } from 'react-router-redux'
 
 class Profile extends Component {
   state = {
-    localProfile: {}
+    localProfile: this.props.empProfile
   }
   componentDidMount(){
-    this.setState({localProfile: this.props.empProfile});
+    const { match, onEditUser } = this.props;
+    onEditUser(match.params.id)
+    if(match.params.id){
+      this.userToEdit(match.params.id);
+    }
   }
+  userToEdit(id){
+    const user = this.props.empData.filter(user => user.id === Number(id));
+    this.setState({localProfile: user[0]});
+  }  
   fieldChange(e){
     const { localProfile } = this.state;
     const updatedProfile = {...localProfile, [e.target.name]: e.target.value};
     this.setState({localProfile: updatedProfile});
   }
   saveData(localProfile){
-    if(this.props.newUser){
-      this.props.onAddUser(localProfile)
-    }else{
-      this.props.onUpdateUser(localProfile)
-    }
+    this.props.onUpdateUser(localProfile);
+    this.props.onSaveChange();
   }
   render() {
     const { localProfile } = this.state;
@@ -45,17 +51,20 @@ class Profile extends Component {
 const mapStateToProps = state => {
   return {
     empProfile: state.user.empProfile,
-    newUser: state.user.newUser
+    empData: state.user.empData
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    onAddUser: user => {
-      dispatch(addUser(user))
-    },
     onUpdateUser: user => {
       dispatch(updateUser(user))
+    },
+    onEditUser: id => {
+      dispatch(editUser(id))
+    },
+    onSaveChange: () => {
+      dispatch(push("/"));
     }
   }
 }
