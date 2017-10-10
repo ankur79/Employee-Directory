@@ -11,12 +11,17 @@ const initialState = {
     "ip_address": ""
   },
   newUser: true,
-  showModal: false
+  showModal: false,
+  loader: false,
+  apiData: []
 }
 
 const user = (state = initialState, action) => {
-  console.log(action)
     switch (action.type) {
+      case 'LOADING':
+        return {...state, loader: action.loader}
+      case 'API_LOADED':
+        return {...state, apiData: action.list}  
       case 'UPDATE_USER':
         if(state.newUser){
           state.empData.push(action.user) 

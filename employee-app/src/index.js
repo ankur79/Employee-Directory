@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux'
-import { createStore, applyMiddleware } from 'redux'
+import { createStore, applyMiddleware, compose } from 'redux'
+import thunk from 'redux-thunk';
 import createHistory from 'history/createBrowserHistory'
 
 import { Route, Switch } from 'react-router-dom'
@@ -19,9 +20,12 @@ import NotFound from './NotFound';
 // Create a history of your choosing (we're using a browser history in this case)
 const history = createHistory()
 
+
 // Build the middleware for intercepting and dispatching navigation actions
-const middleware = routerMiddleware(history)
-const store = createStore(empState, applyMiddleware(middleware));
+const middleware = [thunk, routerMiddleware(history)]
+const composedEnhancers = compose(applyMiddleware(...middleware))
+ 
+const store = createStore(empState,composedEnhancers);
 
 ReactDOM.render(<Provider store={store}>
                     <ConnectedRouter history={history}>
